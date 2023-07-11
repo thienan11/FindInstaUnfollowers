@@ -53,3 +53,35 @@ const openFollowings = () => {
   //   scrollFollowings();
   // }, 1000);
 };
+
+/**
+ * scrolls through list of followers
+ */
+const scrollFollowersLst = () => {
+  const followersDiv = document.querySelector('div[role="dialog"] div[role="dialog"] > div > div > div:last-child > div:first-child > div');
+  followersDiv.lastElementChild.scrollIntoView();
+
+  console.debug(`Loaded ${scrollDiv.childElementCount} out of ${followersCount} followers. Please wait...`);
+  
+  setTimeout(() => {
+    if (followersDiv.childElementCount === followersCount) {
+      scrolledFollowersCount = followersDiv.childElementCount;
+      
+      //getFollowers();
+
+      console.debug('Please wait for the followings list to load...');
+      setTimeout(() => {
+        console.info(`Scroll Followers completed with ${followersCount} people`);
+        console.debug('Please wait...');
+        scrollingCount = 0;
+        
+        // openFollowingDialog();
+
+      }, 3000);
+    } else {
+      scrollingCount = followersDiv.childElementCount;
+      //scrollFollowers();
+    }
+  }, 1000);
+}
+
