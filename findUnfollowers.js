@@ -5,8 +5,8 @@ var following = [] // list of followings
 var totalFollowers = 0
 var totalFollowings = 0
 
-var scrolledFollowersCount = 0
-var scrolledFollowingCount = 0
+var followersCounter = 0
+var followingsCounter = 0
 
 var scrollingCount = 0; // temp variable to store the count for following and followers while scrolling
 
@@ -65,7 +65,7 @@ const scrollFollowersLst = () => {
   
   setTimeout(() => {
     if (followersDiv.childElementCount === followersCount) {
-      scrolledFollowersCount = followersDiv.childElementCount;
+      followersCounter = followersDiv.childElementCount;
       
       //getFollowers();
 
@@ -84,4 +84,6 @@ const scrollFollowersLst = () => {
     }
   }, 1000);
 }
+
+openFollowers()
 
