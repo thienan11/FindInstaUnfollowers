@@ -64,7 +64,7 @@ const scrollFollowersLst = () => {
   console.debug(`Loaded ${scrollDiv.childElementCount} out of ${followersCount} followers. Please wait...`);
   
   setTimeout(() => {
-    if (followersDiv.childElementCount === followersCount) {
+    if (followersDiv.childElementCount === followersCount || (scrollingCount === scrollDiv.childElementCount)) {
       followersCounter = followersDiv.childElementCount;
       
       //getFollowers();
