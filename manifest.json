@@ -8,5 +8,12 @@
   ],
   "browser_action": {
     "default_popup": "popup.html"
+  },
+  "action": {
+    "default_icon": "assets/icon-196x196.png"
+  },
+  "icons":{
+    "196": "assets/icon-196x196.png",
+    "228": "assets/icon-228x228.png"
   }
 }
