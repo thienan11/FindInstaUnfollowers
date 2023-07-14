@@ -1,6 +1,6 @@
 
 var followers = [] // list of followers
-var following = [] // list of followings
+var followings = [] // list of followings
 
 var totalFollowers = 0
 var totalFollowings = 0
@@ -27,12 +27,58 @@ const openFollowers = () => {
   totalFollowers = parseInt(followersLink.firstElementChild.textContent);
   followersLink.click();
 
-  // setTimeout(() => {
-  //   console.debug('Please wait...');
-  //   scrollFollowers();
-  // }, 1000);
+  // wait for 1 sec, then start scrolling
+  setTimeout(() => {
+    console.debug('Please wait...');
+    scrollFollowersLst();
+  }, 1000);
 
 };
+
+/**
+ * scrolls through list of followers
+ */
+const scrollFollowersLst = () => {
+  const followersDiv = document.querySelector('div[role="dialog"] div[role="dialog"] > div > div > div:last-child > div:first-child > div');
+  followersDiv.lastElementChild.scrollIntoView();
+
+  console.debug(`Loaded ${followersDiv.childElementCount} out of ${totalFollowers} followers. Please wait...`);
+  
+  setTimeout(() => {
+    if (followersDiv.childElementCount === totalFollowers || (scrollingCount === followersDiv.childElementCount)) {
+      followersCounter = followersDiv.childElementCount;
+      
+      getFollowers(followersDiv);
+
+      console.debug('Please wait for the followings list to load...');
+
+      setTimeout(() => {
+        console.info(`Scroll Followers completed with ${totalFollowers} people`);
+        console.debug('Please wait...');
+        scrollingCount = 0;
+        
+        // openFollowingDialog();
+
+      }, 3000);
+
+    } else {
+      scrollingCount = followersDiv.childElementCount;
+      scrollFollowersLst();
+    }
+  }, 1000);
+}
+
+const getFollowers = (div) => {
+  var followersDiv = div.children;
+  for (var i = 0;i < followersDiv.length; i++){
+    var tempUser = followersDiv[i].children[0].children[0].children[0].children[1].children[0].children[0];
+    followers.push({
+      userID: tempUser.children[0]?.textContent
+    });
+  }
+  document.querySelector('[aria-label="Close"]').parentElement.parentElement.click();
+  console.log(followers);
+}
 
 /**
  * open followings tab on main profile page
@@ -48,42 +94,53 @@ const openFollowings = () => {
   totalFollowings = parseInt(followingsLink.firstElementChild.textContent);
   followingsLink.click();
 
-  // setTimeout(() => {
-  //   console.debug('Please wait...');
-  //   scrollFollowings();
-  // }, 1000);
+  setTimeout(() => {
+    console.debug('Please wait...');
+    scrollFollowingsLst();
+  }, 1000);
 };
 
 /**
  * scrolls through list of followers
  */
-const scrollFollowersLst = () => {
-  const followersDiv = document.querySelector('div[role="dialog"] div[role="dialog"] > div > div > div:last-child > div:first-child > div');
-  followersDiv.lastElementChild.scrollIntoView();
+const scrollFollowingsLst = () => {
+  const followingsDiv = document.querySelector('div[role="dialog"] div[role="dialog"] > div > div > div:last-child > div:first-child > div');
+  followingsDiv.lastElementChild.scrollIntoView();
 
-  console.debug(`Loaded ${scrollDiv.childElementCount} out of ${followersCount} followers. Please wait...`);
+  console.debug(`Loaded ${followingsDiv.childElementCount} out of ${totalFollowings} followings. Please wait...`);
   
   setTimeout(() => {
-    if (followersDiv.childElementCount === followersCount || (scrollingCount === scrollDiv.childElementCount)) {
-      followersCounter = followersDiv.childElementCount;
+    if (followingsDiv.childElementCount === totalFollowings || (scrollingCount === followingsDiv.childElementCount)) {
+      followersCounter = followingsDiv.childElementCount;
       
-      //getFollowers();
+      getFollowings(followingsDiv);
 
       console.debug('Please wait for the followings list to load...');
+
       setTimeout(() => {
-        console.info(`Scroll Followers completed with ${followersCount} people`);
+        console.info(`Scroll Followings completed with ${totalFollowings} people`);
         console.debug('Please wait...');
         scrollingCount = 0;
-        
-        // openFollowingDialog();
 
       }, 3000);
+      
     } else {
-      scrollingCount = followersDiv.childElementCount;
-      //scrollFollowers();
+      scrollingCount = followingsDiv.childElementCount;
+      scrollFollowingsLst();
     }
   }, 1000);
 }
 
-openFollowers()
+const getFollowings = (div) => {
+  var followingsDiv = div.children;
+  for (var i = 0;i < followingsDiv.length; i++){
+    var tempUser = followingsDiv[i].children[0].children[0].children[0].children[1].children[0].children[0];
+    followings.push({
+      userID: tempUser.children[0]?.textContent
+    });
+  }
+  document.querySelector('[aria-label="Close"]').parentElement.parentElement.click();
+  console.log(followings);
+}
 
+openFollowings()
