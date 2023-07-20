@@ -31,7 +31,7 @@ const openFollowers = () => {
   setTimeout(() => {
     console.debug('Please wait...');
     scrollFollowersLst();
-  }, 1000);
+  }, 3000);
 
 };
 
@@ -55,9 +55,12 @@ const scrollFollowersLst = () => {
       setTimeout(() => {
         console.info(`Scroll Followers completed with ${totalFollowers} people`);
         console.debug('Please wait...');
-        scrollingCount = 0;
+
+        console.log(followers);
         
-        // openFollowingDialog();
+        scrollingCount = 0;
+
+        openFollowings();
 
       }, 3000);
 
@@ -65,7 +68,7 @@ const scrollFollowersLst = () => {
       scrollingCount = followersDiv.childElementCount;
       scrollFollowersLst();
     }
-  }, 1000);
+  }, 3000);
 }
 
 const getFollowers = (div) => {
@@ -97,7 +100,7 @@ const openFollowings = () => {
   setTimeout(() => {
     console.debug('Please wait...');
     scrollFollowingsLst();
-  }, 1000);
+  }, 3000);
 };
 
 /**
@@ -120,7 +123,10 @@ const scrollFollowingsLst = () => {
       setTimeout(() => {
         console.info(`Scroll Followings completed with ${totalFollowings} people`);
         console.debug('Please wait...');
-        scrollingCount = 0;
+
+        document.querySelector('[aria-label="Close"]').parentElement.parentElement.click();
+
+        console.log(followings)
 
       }, 3000);
       
@@ -128,7 +134,7 @@ const scrollFollowingsLst = () => {
       scrollingCount = followingsDiv.childElementCount;
       scrollFollowingsLst();
     }
-  }, 1000);
+  }, 3000);
 }
 
 const getFollowings = (div) => {
@@ -143,4 +149,10 @@ const getFollowings = (div) => {
   console.log(followings);
 }
 
-openFollowings()
+function run() {
+  if (/(http\:|https\:)\/\/(www.)instagram.com\//.test(location.href)) {
+    openFollowers();
+  } else {
+    console.error('You should be in your instagram profile in order to execute the script');
+  }
+}
